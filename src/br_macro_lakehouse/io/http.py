@@ -6,7 +6,12 @@ from typing import Any
 import requests
 
 
-def get_json(url: str, params: dict[str, Any] | None = None, timeout_s: int = 30, retries: int = 3) -> Any:
+def get_json(
+    url: str,
+    params: dict[str, Any] | None = None,
+    timeout_s: int = 30,
+    retries: int = 3,
+) -> Any:
     last_err: Exception | None = None
     for i in range(retries):
         try:

@@ -3,7 +3,9 @@ from __future__ import annotations
 import logging
 
 
-def get_logger(name: str = "br_macro_lakehouse", level: int = logging.INFO) -> logging.Logger:
+def get_logger(
+    name: str = "br_macro_lakehouse", level: int = logging.INFO
+) -> logging.Logger:
     logger = logging.getLogger(name)
     if not logger.handlers:
         handler = logging.StreamHandler()

@@ -10,7 +10,10 @@ def fetch_ipca_index_monthly(start_year: int, end_year: int) -> pd.DataFrame:
     data = get_json(url)
 
     serie = data[0]["resultados"][0]["series"][0]["serie"]
-    rows = [{"period": k, "ipca_index": float(v) if v is not None else None} for k, v in serie.items()]
+    rows = [
+        {"period": k, "ipca_index": float(v) if v is not None else None}
+        for k, v in serie.items()
+    ]
     df = pd.DataFrame(rows)
     df["month"] = pd.to_datetime(df["period"], format="%Y%m", errors="coerce")
     df = df.dropna(subset=["month"])

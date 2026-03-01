@@ -1,8 +1,10 @@
 # Databricks notebook source
 import sys
+
 sys.path.append("../src")
 
 from br_macro_lakehouse.config import LakehouseConfig
+
 cfg = LakehouseConfig()
 
 pdf = spark.table(cfg.fqtn(cfg.gold_mart_monthly)).toPandas().sort_values("month")

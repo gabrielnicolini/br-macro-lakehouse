@@ -5,7 +5,9 @@ import pandas as pd
 from br_macro_lakehouse.io.http import get_json
 
 
-def fetch_tax_revenue_pct_gdp(country_ids: list[str], start_year: int, end_year: int) -> pd.DataFrame:
+def fetch_tax_revenue_pct_gdp(
+    country_ids: list[str], start_year: int, end_year: int
+) -> pd.DataFrame:
     indicator = "GC.TAX.TOTL.GD.ZS"
     country = ";".join(country_ids)
     url = f"https://api.worldbank.org/v2/country/{country}/indicator/{indicator}"
