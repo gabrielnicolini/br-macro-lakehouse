@@ -8,6 +8,9 @@ import pandas as pd
 import requests
 
 
+print("REFRESH_DATA_BUILD=month_key_only_v1")
+
+
 ROOT = os.path.dirname(os.path.dirname(__file__))
 OUT_DIR = os.path.join(ROOT, "data", "silver")
 os.makedirs(OUT_DIR, exist_ok=True)
