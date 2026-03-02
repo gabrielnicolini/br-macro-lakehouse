@@ -110,6 +110,15 @@ def main() -> None:
     ipca.to_csv(os.path.join(OUT_DIR, "ipca_12m_monthly.csv"), index=False)
     mart.to_csv(os.path.join(OUT_DIR, "mart_monthly.csv"), index=False)
 
+    import inspect
+
+    print("=== refresh_data.py snippet ===")
+    src = inspect.getsource(main).splitlines()
+    for i, line in enumerate(src, start=1):
+        if 70 <= i <= 120:
+            print(f"{i:03d}: {line}")
+    print("=== end snippet ===")
+
 
 if __name__ == "__main__":
     main()
