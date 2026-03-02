@@ -71,13 +71,14 @@ def _ibge_ipca_12m() -> pd.DataFrame:
             val = float(v)
         except Exception:
             continue
-        month = datetime.strptime(k, "%Y%m").date().replace(day=1)
+        month = pd.Timestamp(datetime.strptime(k, "%Y%m")).replace(day=1)
         rows.append((month, val))
 
     df = pd.DataFrame(rows, columns=["month", "ipca_12m"])
     df = df.sort_values("month")
     df["ipca_mom"] = df["ipca_12m"].pct_change(1)
     df["ipca_yoy"] = df["ipca_12m"].pct_change(12)
+    df["month"] = pd.to_datetime(df["month"])
     return df
 
 
@@ -92,6 +93,8 @@ def main() -> None:
 
     # 2) IPCA 12m
     ipca = _ibge_ipca_12m()
+    ipca["month"] = pd.to_datetime(ipca["month"])
+    fx_monthly["month"] = pd.to_datetime(fx_monthly["month"])
 
     # 3) Join “mart” (minimal MVP)
     mart = pd.merge(ipca, fx_monthly, on="month", how="left")
