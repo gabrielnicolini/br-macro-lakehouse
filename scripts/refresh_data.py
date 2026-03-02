@@ -93,8 +93,14 @@ def main() -> None:
 
     # 2) IPCA 12m
     ipca = _ibge_ipca_12m()
-    ipca["month"] = pd.to_datetime(ipca["month"])
-    fx_monthly["month"] = pd.to_datetime(fx_monthly["month"])
+
+    # --- Force identical merge key (month grain) ---
+    ipca["month_key"] = pd.to_datetime(ipca["month"]).dt.strftime("%Y-%m")
+    fx_monthly["month_key"] = pd.to_datetime(fx_monthly["month"]).dt.strftime("%Y-%m")
+
+    mart = pd.merge(ipca.drop(columns=["month"]), fx_monthly.drop(columns=["month"]), on="month_key", how="left")
+    mart["month"] = pd.to_datetime(mart["month_key"] + "-01")
+    mart = mart[["month"] + [c for c in mart.columns if c != "month"]]
 
     # 3) Join “mart” (minimal MVP)
     mart = pd.merge(ipca, fx_monthly, on="month", how="left")
