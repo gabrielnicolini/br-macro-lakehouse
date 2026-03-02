@@ -102,9 +102,6 @@ def main() -> None:
     mart["month"] = pd.to_datetime(mart["month_key"] + "-01")
     mart = mart[["month"] + [c for c in mart.columns if c != "month"]]
 
-    # 3) Join “mart” (minimal MVP)
-    mart = pd.merge(ipca, fx_monthly, on="month", how="left")
-
     # Output
     fx_monthly.to_csv(os.path.join(OUT_DIR, "fx_usdbrl_monthly.csv"), index=False)
     ipca.to_csv(os.path.join(OUT_DIR, "ipca_12m_monthly.csv"), index=False)
